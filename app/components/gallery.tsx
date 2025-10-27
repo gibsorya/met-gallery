@@ -16,8 +16,12 @@ export default async function Gallery(props: GalleryProps) {
 
     await getCachedObjects(params)
 
+    if (artObjects.length == 0) {
+        return <div className="flex flex-col w-full justify-center items-center">No matching results...</div>
+    }
+
     return (
-        <div className="gallery grid">
+        <div className="gallery grid w-full md:w-4/5">
             {artObjects.map((artObject, index) => {
                 return (<GalleryItem artObject={artObject} key={index} imageUrl={artObject.primaryImageSmall}></GalleryItem>);
             })}
@@ -37,6 +41,10 @@ export async function getArtObjects(searchParams?: { q?: string, departmentId?: 
     artObjects = [];
     publicArt.clear();
 
+    if(ids.objectIDs.length == 0) {
+        return
+    }
+
     for (let i = 1; i < limit; i++) {
         // const data = await getObjectByID(ids.objectIDs[i])
         const getCachedArtObject = unstable_cache(
@@ -47,7 +55,7 @@ export async function getArtObjects(searchParams?: { q?: string, departmentId?: 
         )
 
         const data = await getCachedArtObject()
-        console.log("DATA: ", i)
+
         if (data.isPublicDomain && !publicArt.has(data.primaryImageSmall)) {
             artObjects.push(data)
             publicArt.set(data.primaryImageSmall, true)

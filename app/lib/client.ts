@@ -44,7 +44,7 @@ export async function getObjectIds(searchParams?: { q?: string, departmentId?: s
     }
 
     if(searchParams && searchParams.departmentId) {
-        url.searchParams.append('departmentId', searchParams.departmentId)
+        url.searchParams.append('departmentIds', searchParams.departmentId)
     }
 
     let data = await fetch(url);
