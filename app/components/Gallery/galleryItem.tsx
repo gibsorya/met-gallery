@@ -1,17 +1,19 @@
 'use client'
 
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
-import { ArtObject } from "../lib/client"
+import { ArtObject } from "../../lib/client"
+import { GalleryItemModal } from "./galleryItemModal"
 
 interface GalleryItemProps {
     artObject: ArtObject
-    imageUrl: string
+    imageUrl: string,
 }
 
 export default function GalleryItem(props: GalleryItemProps) {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
     const [isPortrait, setIsPortrait] = useState(false)
+    const [modalIsActive, setModalIsActive] = useState(false)
 
     const { imageUrl, artObject } = props;
 
@@ -35,9 +37,13 @@ export default function GalleryItem(props: GalleryItemProps) {
         gridRowEnd: `span ${isPortrait ? 2 : 1}`
     }
 
+    const handleOnOpen = () => setModalIsActive(true);
+    const handleOnClose = () => setModalIsActive(false);
+
     return (
-        <div id={`art-object-${artObject.objectID}`} style={style} className="gallery-item">
-        <Image style={{objectFit: 'cover'}} src={imageUrl} alt={''} width={dimensions.width} height={dimensions.height} className="w-full h-full" />
+        <div onClick={handleOnOpen} id={`art-object-${artObject.objectID}`} style={style} className="gallery-item cursor-pointer">
+            <Image style={{objectFit: 'cover'}} src={imageUrl} alt={''} width={dimensions.width} height={dimensions.height} className="w-full h-full" />
+            <GalleryItemModal artObject={artObject} onClose={handleOnClose} isActive={modalIsActive} />
         </div>
     );
 }

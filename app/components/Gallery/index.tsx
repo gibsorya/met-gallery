@@ -1,5 +1,5 @@
 import { unstable_cache } from "next/cache";
-import { ArtObject, getDepartments, getObjectByID, getObjectIds } from "../lib/client";
+import { ArtObject, getDepartments, getObjectByID, getObjectIds } from "../../lib/client";
 import './gallery.css'
 import GalleryItem from "./galleryItem";
 

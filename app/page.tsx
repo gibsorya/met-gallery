@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { getDepartments } from "./lib/client";
 
-import Gallery from "./components/gallery";
+import Gallery from "./components/Gallery";
 import Collections from './components/Collections';
 import LoadingSekelton from './components/LoadingSkeleton';
 import Search from './components/Search';
@@ -23,7 +23,7 @@ export default async function Home(props: PageProps) {
           <Collections departments={departments} currentDepartment={departmentId}></Collections>
         </div>
       </div>
-      <div className="flex flex-col w-full items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <div className="flex flex-col w-full items-center justify-center font-sans">
         <Suspense key={query + departmentId} fallback={<LoadingSekelton />}>
           <Gallery query={params} />
         </Suspense>
