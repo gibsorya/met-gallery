@@ -4,12 +4,14 @@ import { getDepartments } from "./lib/client";
 import Gallery from "./components/gallery";
 import Collections from './components/Collections';
 import LoadingSekelton from './components/LoadingSkeleton';
+import Search from './components/Search';
+interface PageProps {
+  searchParams?: Promise<{ q?: string, departmentId?: string }>
+}
 
-import GalleryItem from "./components/galleryItem";
-
-let publicArt = new Map<number, boolean>();
-let artObjects: ArtObject[] = [];
-
+export default async function Home(props: PageProps) {
+  const params = await props.searchParams;
+  const query = params?.q || ''
   const departmentId = params?.departmentId || '';
   const departments = await getDepartments()
 
