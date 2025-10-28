@@ -48,6 +48,11 @@ export async function getObjectIds(searchParams?: { q?: string, departmentId?: s
     }
 
     let data = await fetch(url);
+    
+    if(!data.ok) {
+        return;
+    }
+
     let objects: ObjectList = await data.json();
 
     return objects;
@@ -55,6 +60,11 @@ export async function getObjectIds(searchParams?: { q?: string, departmentId?: s
 
 export async function getObjectByID(ID: number) {
     let data = await fetch(`${baseApiUrl}/objects/${ID}`);
+
+    if(!data.ok) {
+        return;
+    }
+
     let object: ArtObject = await data.json();
 
     return object;

@@ -32,7 +32,14 @@ export default async function Gallery(props: GalleryProps) {
 const getCachedObjects = unstable_cache(
     async (searchParams?: { q?: string, departmentId?: string }) => {
         return await getArtObjects(searchParams)
-    }, ['art-objects']
+    }
+)
+
+const getCachedArtObject = unstable_cache(
+    async (ID: number) => {
+        const data = await getObjectByID(ID)
+        return data
+    }
 )
 
 export async function getArtObjects(searchParams?: { q?: string, departmentId?: string }, limit = 80) {
@@ -41,24 +48,20 @@ export async function getArtObjects(searchParams?: { q?: string, departmentId?: 
     artObjects = [];
     publicArt.clear();
 
-    if(ids.objectIDs.length == 0) {
-        return
-    }
+    if (ids) {
+        if (ids.objectIDs.length == 0) {
+            return
+        }
 
-    for (let i = 1; i < limit; i++) {
-        // const data = await getObjectByID(ids.objectIDs[i])
-        const getCachedArtObject = unstable_cache(
-            async () => {
-                const data = await getObjectByID(ids.objectIDs[i])
-                return data
-            }, [`art-object-${i}`]
-        )
+        for (let i = 1; i < limit; i++) {
+            const data = await getCachedArtObject(ids.objectIDs[i])
 
-        const data = await getCachedArtObject()
-
-        if (data.isPublicDomain && !publicArt.has(data.primaryImageSmall)) {
-            artObjects.push(data)
-            publicArt.set(data.primaryImageSmall, true)
+            if (data && data.isPublicDomain && !publicArt.has(data.primaryImageSmall)) {
+                artObjects.push(data)
+                publicArt.set(data.primaryImageSmall, true)
+            } else if (data === undefined) {
+                break
+            }
         }
     }
 }
