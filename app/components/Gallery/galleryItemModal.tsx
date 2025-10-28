@@ -11,8 +11,6 @@ interface GalleryItemModalProps {
 export function GalleryItemModal(props: GalleryItemModalProps) {
     const { artObject, isActive, onClose } = props;
 
-    console.log("ART OBJECT", artObject)
-
     if(!isActive) return null;
 
     const handleCloseClick = (event: React.MouseEvent) => {

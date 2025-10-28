@@ -20,7 +20,7 @@ export default async function Home(props: PageProps) {
       <div className='flex flex-col w-full md:w-4/5 gap-4'>
         <Search placeholder='Search Art' />
         <div className='flex w-full justify-start'>
-          <Collections departments={departments} currentDepartment={departmentId}></Collections>
+          {departments && <Collections departments={departments} currentDepartment={departmentId}></Collections>}
         </div>
       </div>
       <div className="flex flex-col w-full items-center justify-center font-sans">
