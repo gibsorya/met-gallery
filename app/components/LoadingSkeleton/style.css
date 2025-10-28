@@ -1,0 +1,16 @@
+.gallery-skeleton {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-rows: repeat(auto-fit, 280px);
+    grid-auto-flow: dense;
+    grid-gap: 0.3rem;
+}
+
+.gallery-item.landscape {
+    grid-column-end: span 2;
+    grid-row-end: span 1;
+}
+
+.gallery-item.portrait {
+    grid-column-end: span 1;
+    grid-row-end: span 2;
+}
